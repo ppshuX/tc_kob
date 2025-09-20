@@ -1,30 +1,40 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <div>
+    <div>Bots0 昵称：{{ botName[0] }}</div>
+    <div>Bots1 昵称：{{ botName[1] }}</div>
+    <div>Bots2 昵称：{{ botName[2] }}</div>
+  </div>
   <router-view/>
 </template>
 
+<script>
+import $ from 'jquery'
+import { ref } from 'vue'
+
+export default {
+  name: 'App',
+  setup: () => {
+    let botName = ref([])
+
+    $.ajax({
+      url: 'http://127.0.0.1:3000/pk/getbotinfo/',
+      type: 'GET',
+      success: (res) => {
+        botName.value = res
+      }
+    })
+    
+    return {
+      botName,
+    }
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+body {
+  background-image: url('./assets/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 </style>

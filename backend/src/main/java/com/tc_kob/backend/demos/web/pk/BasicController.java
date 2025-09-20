@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.tc_kob.backend.demos.web;
+package com.tc_kob.backend.demos.web.pk;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.tc_kob.backend.demos.web.User;
 
 /**
  * @author <a href="mailto:chenxilzx1@gmail.com">theonefx</a>
