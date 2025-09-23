@@ -20,19 +20,19 @@ export class AcGameObject {
     destroy() {  // 删除对象
         this.on_destroy();
         
-        for (let i = 0; i < AC_GAME_OBJECTS.length; i++) {
-            if (AC_GAME_OBJECTS[i] === this) {
-                AC_GAME_OBJECTS.splice(i, 1);
+        for (let i in AC_GAME_OBJECTS) {
+            const obj = AC_GAME_OBJECTS[i];
+            if (obj === this) {
+                AC_GAME_OBJECTS.splice(i);
                 break;
             }
         }
     }
 }
 
-let last_timestamp = 0;  // 上一帧的时间
-const step = (timestamp) => {
-    for (let i = 0; i < AC_GAME_OBJECTS.length; i++) {
-        const obj = AC_GAME_OBJECTS[i];
+let last_timestamp;  // 上一帧的时间
+const step = timestamp => {
+    for (let obj of AC_GAME_OBJECTS) {
         if (!obj.has_called_start) {
             obj.has_called_start = true;
             obj.start();
