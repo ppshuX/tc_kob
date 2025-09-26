@@ -1,7 +1,7 @@
-package com.tc_kob.backend.controller.service.impl;
+package com.tc_kob.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.tc_kob.backend.controller.service.impl.utils.UserDetailsImpl;
+import com.tc_kob.backend.service.impl.utils.UserDetailsImpl;
 import com.tc_kob.backend.mapper.UserMapper;
 import com.tc_kob.backend.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
