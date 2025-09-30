@@ -3,11 +3,12 @@ import { Wall } from './Wall.js'
 import { Snake } from './Snake.js'
 
 export class GameMap extends AcGameObject {
-    constructor(ctx, parent) {
+    constructor(ctx, parent, store) {
         super();
 
         this.ctx = ctx;  // 画布
         this.parent = parent;  // 父元素
+        this.store = store;
         this.L = 0;
         
         this.rows = 13;
@@ -22,66 +23,17 @@ export class GameMap extends AcGameObject {
         ];
     }
 
-    check_connected(g, sx, sy, tx, ty) {  // 判断是否连通
-        if (sx == tx && sy == ty) return true;  // 如果起点和终点相同，则返回true
-        g[sx][sy] = true;  // 标记起点为已访问
+     create_walls() {
+        const g = this.store.state.pk.gamemap;
 
-        let dx = [0, 1, 0, -1], dy = [1, 0, -1, 0];  // 四个方向
-        for (let i = 0; i < 4; i ++) {
-            let x = sx + dx[i], y = sy + dy[i];
-            if (!g[x][y] && this.check_connected(g, x, y, tx, ty)) 
-                return true;  // 如果下一个点没有被访问过，则继续递归
-        }
-
-        return false;
-    }
-
-    create_walls() {  
-        const g = [];
-
-        // 初始化地图
-        for (let r = 0; r < this.rows; r++) {
-            g[r] = [];
-            for (let c = 0; c < this.cols; c++) {
-                g[r][c] = false;
-            }
-        }
-
-        // 给四周加上墙
-        for (let c = 0; c < this.cols; c++) {
-            g[0][c] = g[this.rows - 1][c] = true;
-        }
-        for (let r = 0; r < this.rows; r++) {
-            g[r][0] = g[r][this.cols - 1] = true;
-        }
-
-        // 创建随机障碍物
-        for (let i = 0; i < this.inner_walls_count / 2; i ++) {
-            for (let j = 0 ; j < 1000; j ++) {
-                let r = parseInt(Math.random() * this.rows);
-                let c = parseInt(Math.random() * this.cols);
-
-                if (g[r][c] || g[this.rows - 1 - r][this.cols - 1 - c])  continue;  // 中心对称
-
-                if (r == this.rows - 2 && c == 1 || r == 1 && c == this.cols - 2) continue;  // 不能覆盖起始位置
-                
-                g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;  // 设置为墙
-                break;
-            }
-        }
-
-        // 两条蛇必须要能连通（不连通就重新生成）
-        const copy_g = JSON.parse(JSON.stringify(g));
-        if (!this.check_connected(copy_g, this.rows - 2, 1, 1, this.cols - 2)) return false;
-        
-
-        for (let r = 0; r < this.rows; r++) {
-            for (let c = 0; c < this.cols; c++) {
+        for (let r = 0 ; r < this.rows; r ++) {
+            for (let c = 0; c < this.cols; c ++) {
                 if (g[r][c]) {
                     this.walls.push(new Wall(r, c, this));
                 }
             }
         }
+
         return true;
     }
 
@@ -102,12 +54,8 @@ export class GameMap extends AcGameObject {
     }
 
     start() {
-        for (let i = 0; i < 1000; i ++) {
-            if (this.create_walls()) {
-                break;
-            }
-        }
-
+        this.create_walls();
+        
         this.add_listening_events();
     }
 
