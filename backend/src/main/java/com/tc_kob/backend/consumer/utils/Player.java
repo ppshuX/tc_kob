@@ -24,7 +24,7 @@ public class Player {
     public List<Cell> getCells() {
         List<Cell> res = new ArrayList<>();
 
-        int [] dx = {-1, 0, 1, 0}, dy = {0, -1, 0, 1};
+        int [] dx = {-1, 0, 1, 0}, dy = {0, 1, 0, -1};
         int x = sx, y = sy;
         int step = 0;
         res.add(new Cell(x, y));
