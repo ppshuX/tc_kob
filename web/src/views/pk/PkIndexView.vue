@@ -37,7 +37,7 @@ export default {
 
             socket.onmessage = msg => {
                 const data = JSON.parse(msg.data);
-                if (data.event === "matched") {  // 匹配成功
+                if (data.event === "start-matching") {  // 匹配成功
                     store.commit("updateOpponent", {
                         username: data.opponent_username,
                         photo: data.opponent_photo,
