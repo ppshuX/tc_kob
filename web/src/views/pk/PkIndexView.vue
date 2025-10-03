@@ -1,18 +1,17 @@
 <template>
     <PlayGround v-if="$store.state.pk.status === 'playing'" />
-    <MatchGround  v-if="$store.state.pk.status === 'matching'"/>
-    <ResultBoard v-if="$store.state.pk.loser != 'none'"/>
+    <MatchGround v-if="$store.state.pk.status === 'matching'" />
+    <ResultBoard v-if="$store.state.pk.loser != 'none'" />
 </template>
 
 <script>
-import PlayGround from '@/components/PlayGround.vue'
-import MatchGround from '@/components/MatchGround.vue';
-import ResultBoard from '@/components/ResultBoard.vue';
-import { onMounted, onUnmounted } from 'vue';
-import { useStore } from 'vuex';
+import PlayGround from '../../components/PlayGround.vue'
+import MatchGround from '../../components/MatchGround.vue'
+import ResultBoard from '../../components/ResultBoard.vue'
+import { onMounted, onUnmounted } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
-    name: 'PkIndexView',
     components: {
         PlayGround,
         MatchGround,
@@ -21,6 +20,8 @@ export default {
     setup() {
         const store = useStore();
         const socketUrl = `ws://127.0.0.1:3000/websocket/${store.state.user.token}/`;
+
+        store.commit("updateLoser", "none");
 
         let socket = null;
         onMounted(() => {
@@ -44,7 +45,7 @@ export default {
                     });
                     setTimeout(() => {
                         store.commit("updateStatus", "playing");
-                    }, 1500);
+                    }, 200);
                     store.commit("updateGamemap", data.game);
                 } else if (data.event === "move") {
                     console.log(data);
@@ -81,5 +82,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

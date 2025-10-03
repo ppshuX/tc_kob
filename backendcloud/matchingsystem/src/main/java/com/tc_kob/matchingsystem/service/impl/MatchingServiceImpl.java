@@ -10,9 +10,9 @@ public class MatchingServiceImpl implements MatchingService {
 
 
     @Override
-    public String addPlayer(Integer userId, Integer rating) {
+    public String addPlayer(Integer userId, Integer rating, Integer botId) {
         System.out.println("add Player: " + userId + ", " + rating);
-        matchingPool.addPlayer(userId, rating);
+        matchingPool.addPlayer(userId, rating, botId);
         return "add player success";
     }
 
