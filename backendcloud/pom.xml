@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.kob</groupId>
+    <groupId>com.tc_kob</groupId>
     <artifactId>backendcloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
@@ -58,7 +58,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
-                    <mainClass>com.kob.backendcloud.BackendcloudApplication</mainClass>
+                    <mainClass>com.tc_kob.backendcloud.BackendcloudApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
