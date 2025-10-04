@@ -31,7 +31,7 @@ public class WebSocketServer {
     private User user;
     private Session session = null;
 
-    private static UserMapper userMapper;
+    public static UserMapper userMapper;
     public static RecordMapper recordMapper;
     private static BotMapper botMapper;
     public static RestTemplate restTemplate;
@@ -88,7 +88,7 @@ public class WebSocketServer {
 
     public static void startGame(Integer aId, Integer aBotId, Integer bId, Integer bBotId) {
         User a = userMapper.selectById(aId), b = userMapper.selectById(bId);
-        Bot botA = botMapper.selectById(bBotId), botB = botMapper.selectById(bBotId);
+        Bot botA = botMapper.selectById(aBotId), botB = botMapper.selectById(bBotId);
 
         Game game = new Game(
                 13,
@@ -151,7 +151,7 @@ public class WebSocketServer {
 
     private void move(int direction) {
         if (game.getPlayerA().getId().equals(user.getId())) {
-            if (game.getPlayerB().getId().equals(-1))   // 亲自出马
+            if (game.getPlayerA().getBotId().equals(-1))   // 亲自出马
                 game.setNextStepA(direction);
         } else if (game.getPlayerB().getId().equals(user.getId())) {
             if (game.getPlayerB().getBotId().equals(-1))  // 亲自出马
