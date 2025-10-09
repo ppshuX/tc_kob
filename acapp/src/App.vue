@@ -19,7 +19,6 @@ import RecordIndexView from './views/record/RecordIndexView.vue'
 import UserBotIndexView from './views/user/bot/UserBotIndexView.vue'
 
 export default {
-  name: 'App',
   components: {
     MenuView,
     PkIndexView,
@@ -31,7 +30,8 @@ export default {
   setup() {
     const store = useStore();
 
-    const jwt_token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3OTJhYmFmYWFlM2E0MWY0YjM4ZTE0MjdlOTI3MzYyNCIsInN1YiI6IjIiLCJpc3MiOiJzZyIsImlhdCI6MTc1OTU4NTE2MiwiZXhwIjoxNzYwNzk0NzYyfQ.raTYJOYYQQ_F48BEjjiMirXNLwX1vn-i4Cm5MOa40n0";
+    const jwt_token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIwODQ4NWRkNWZkZDU0ZGYxOWU1YmQwMmYzYjg5MTVmYyIsInN1YiI6IjEiLCJpc3MiOiJzZyIsImlhdCI6MTc1OTkzMjc4MCwiZXhwIjoxNzYxMTQyMzgwfQ.GAhjIJ5FYc485ytjXz7MI_d21bCvV6sqsGAA17u2LvM";
+    
 
       if (jwt_token) {
           store.commit("updateToken", jwt_token);
