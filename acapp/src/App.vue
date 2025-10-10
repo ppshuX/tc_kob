@@ -17,6 +17,7 @@ import RanklistIndexView from './views/ranklist/RanklistIndexView.vue'
 import RecordContentView from './views/record/RecordContentView.vue'
 import RecordIndexView from './views/record/RecordIndexView.vue'
 import UserBotIndexView from './views/user/bot/UserBotIndexView.vue'
+import $ from 'jquery'
 
 export default {
   components: {
@@ -30,23 +31,33 @@ export default {
   setup() {
     const store = useStore();
 
-    const jwt_token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIwODQ4NWRkNWZkZDU0ZGYxOWU1YmQwMmYzYjg5MTVmYyIsInN1YiI6IjEiLCJpc3MiOiJzZyIsImlhdCI6MTc1OTkzMjc4MCwiZXhwIjoxNzYxMTQyMzgwfQ.GAhjIJ5FYc485ytjXz7MI_d21bCvV6sqsGAA17u2LvM";
-    
-
-      if (jwt_token) {
-          store.commit("updateToken", jwt_token);
-          store.dispatch("getinfo", {
-              success() {
-                  store.commit ("updatePullingInfo", false);
-              },
-              error() {
-                  store.commit("updatePullingInfo", false);
-              },
-          })
+    $.ajax({
+      url: "https://app7600.acapp.acwing.com.cn/api/user/account/acwing/acapp/apply_code/",
+      type: "GET",
+      success: resp => {
+        if (resp.result === "success") {
+          store.state.user.AcWingOS.api.oauth2.authorize(resp.appid, resp.redirect_uri, resp.scope, resp.state, resp => {
+            if (resp.result === "success") {
+              const jwt_token = resp.jwt_token;
+              store.commit("updateToken", jwt_token);
+              store.dispatch("getinfo", {
+                success() {
+                    store.commit("updatePullingInfo", false);
+                },
+                error() {
+                    store.commit("updatePullingInfo", false);
+                }
+            })
+          } else {
+            store.state.user.AcWingOS.api.window.close();
+          }
+        });
       } else {
-          store.commit("updatePullingInfo", false);
+        store.state.user.AcWingOS.api.window.close();
       }
-  }
+    }
+  })
+}
 }
 </script>
 
